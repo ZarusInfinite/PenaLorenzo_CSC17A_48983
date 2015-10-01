@@ -22,10 +22,7 @@ int main(int argc, char** argv) {
     cin>>SIZE;
     int A[SIZE];//Our array with SIZE
     inputArray(A,SIZE);
-    cout<<"This is the array:"<<endl;
-    displayArray(A,SIZE);
     sortArray(A,SIZE);
-    cout<<"This is the array sorted:"<<endl;
     displayArray(A,SIZE);
     modesrchArray(A,SIZE);
     return 0;
@@ -63,6 +60,7 @@ void sortArray(int A[],int SIZE)
 void displayArray(int A[],int SIZE)
 {
     int count;
+    cout<<"This is the array sorted:"<<endl;
     for(count =0; count<SIZE; count++)
     {
         cout<<A[count]<<endl;
@@ -76,7 +74,7 @@ void modesrchArray(int A[], int size)
     int mode=A[0];//The value of the mode
     for(int count= 0; count<size; count++)
     {
-        if(A[count]=A[count+1])
+        if(A[count]==A[count+1])
         {
             mdCount++;
             if(mdCount > max)
@@ -87,5 +85,5 @@ void modesrchArray(int A[], int size)
         }
     else mdCount=1;
     }
-cout << "mode : " << mode << endl;
+cout << "The mode of the array is: " << mode << endl;
 }
