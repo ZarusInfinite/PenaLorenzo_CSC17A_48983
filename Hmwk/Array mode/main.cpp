@@ -8,82 +8,84 @@
 #include <cstdlib>
 #include <iostream>
 
-void sortArray(int[],int);
-void displayArray(int[],int);
-void searchArray(int[], int);
+void inputArray(int[],int);//Fills the array with elements inputed by user
+void sortArray(int[],int);//Function to sort our array
+void displayArray(int[],int);//Function to output our array
+void modesrchArray(int[], int);//Function that determines mode within the array
 
 using namespace std;
 
-
 int main(int argc, char** argv) {
     
-    int SIZE;
-    int A[SIZE];
-    cout<<"Enter size of array"<<endl;
+    int SIZE;//Hold size of array
+    cout<<"Enter size of array"<<endl;//User determines size of array
     cin>>SIZE;
+    int A[SIZE];//Our array with SIZE
+    inputArray(A,SIZE);
+    cout<<"This is the array:"<<endl;
+    displayArray(A,SIZE);
+    sortArray(A,SIZE);
+    cout<<"This is the array sorted:"<<endl;
+    displayArray(A,SIZE);
+    modesrchArray(A,SIZE);
+    return 0;
+}
+
+void inputArray(int A[], int SIZE)
+{
     cout<<"Enter array elements"<<endl;
         for(int count=0; count<SIZE; count++)
         {
             cin>>A[count];
         }
-    sortArray(A,SIZE);
-    displayArray(A,SIZE);
-    searchArray(A,SIZE);
-    return 0;
 }
 
 void sortArray(int A[],int SIZE)
 {
-    int startScan, minIndex, minValue;
-    for (startScan = 0; startScan < (SIZE - 1); startScan++)
+    int count, index, min;
+    for (count = 0; count <SIZE; count++)
     {
-       minIndex = startScan;
-       minValue = A[startScan];
-       for(int index = startScan + 1; index < SIZE; index++)
+       index = count;
+       min= A[count];
+       for(int i = count + 1; i < SIZE; i++)
        {
-          if (A[index] < minValue)
+          if (A[i] < min)
           {
-             minValue = A[index];
-             minIndex = index;
+             min = A[i];
+             index= i;
           }
        }
-       A[minIndex] = A[startScan];
-       A[startScan] = minValue;
+       A[index] = A[count];
+       A[count] = min;
     }
  }
 
 void displayArray(int A[],int SIZE)
 {
     int count;
-    cout<<"This the array:"<<endl;
     for(count =0; count<SIZE; count++)
     {
-        
         cout<<A[count]<<endl;
     }
 }
 
-void searchArray(int A[], int size)
+void modesrchArray(int A[], int size)
 {
-    int max=0;
-    int mdCount = 1;
-    int mode;
-    int element = A[0]; 
-    
+    int max=0;//
+    int mdCount = 1;//Counts the amount of times an element is repeated
+    int mode=A[0];//The value of the mode
     for(int count= 0; count<size; count++)
     {
         if(A[count]=A[count+1])
         {
             mdCount++;
-        }
-        else
-        {
             if(mdCount > max)
             {
                 max= mdCount;
-                mode=element;
+                mode=A[count];
             }
         }
+    else mdCount=1;
     }
 cout << "mode : " << mode << endl;
 }

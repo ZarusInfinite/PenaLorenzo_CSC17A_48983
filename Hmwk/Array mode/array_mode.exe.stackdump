@@ -1,6 +1,6 @@
 Exception: STATUS_STACK_OVERFLOW at eip=0040155B
 eax=8491BA10 ebx=0029CBE0 ecx=000A2BE0 edx=00000002 esi=8004127B edi=611CCFB2
-ebp=0029CC08 esp=0029CBD4 program=G:\CSC 17A\Project\Array mode\dist\Debug\Cygwin_4.x-Windows\array_mode.exe, pid 5624, thread unknown (0x18A8)
+ebp=0029CC08 esp=0029CBD4 program=G:\CSC 17A\Project\Array mode\dist\Debug\Cygwin_4.x-Windows\array_mode.exe, pid 13272, thread unknown (0x2F2C)
 cs=0023 ds=002B es=002B fs=0053 gs=002B ss=002B
 Stack trace:
 Frame     Function  Args
