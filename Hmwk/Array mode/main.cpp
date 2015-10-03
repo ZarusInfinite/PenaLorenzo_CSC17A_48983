@@ -13,7 +13,7 @@ void displayArray(int[],int);//Function to output our array
 void sortArray(int[],int);
 float mean(int [],int);
 float median(int [],int);
-int *mode(int [],int);
+int mode(int [],int);
 
 using namespace std;
 
@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     displayArray(A,SIZE);
     average=mean(A,SIZE);
     mid=median(A,SIZE);
-    *mode(A,SIZE);
+    mode(A,SIZE);
     cout<<"The mean is: "<<average<<endl;
     cout<<"The median is: "<<mid<<endl;
     return 0;
@@ -110,14 +110,8 @@ float median(int A[], int SIZE)
        return median; 
 }
 
-int *mode(int A[], int SIZE)
+int mode(int A[], int SIZE)
 {
-    int numMode=SIZE%10;
-    int MODE;
-    int *mode= nullptr;
-    mode= new int[numMode];
-    for(int j=0; j<numMode; j++)
-    {
         int max=1,freq=1,mode=A[0];
         for(int i=0; i<SIZE; i++)
         {
@@ -127,13 +121,13 @@ int *mode(int A[], int SIZE)
                 if(freq>max)
                 {
                     max=freq;
-                    *(mode+j)=A[i];
+                    mode=A[i];
                 }
             }
         else freq=1;
         }
-    cout<<"The mode is: "<<*(mode+j)<<endl;   
-    }
+    cout<<"The mode is: "<<mode<<endl;   
+    cout<<"The frequency is: "<<max<<endl;
    
 }
   
