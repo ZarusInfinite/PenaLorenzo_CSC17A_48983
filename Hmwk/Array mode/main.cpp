@@ -19,7 +19,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
     
-    int SIZE;//Hold size of array
+    int SIZE, Mode;//Hold size of array, holds mode.
     float average, mid;
     cout<<"The array contains a repeated set of elements. Goes from 0 to 9 and repeats."<<endl;
     cout<<"You choose how many elements the array holds."<<endl;//User determines size of array
@@ -30,6 +30,7 @@ int main(int argc, char** argv) {
     displayArray(A,SIZE);
     average=mean(A,SIZE);
     mid=median(A,SIZE);
+    *mode(A,SIZE);
     cout<<"The mean is: "<<average<<endl;
     cout<<"The median is: "<<mid<<endl;
     return 0;
@@ -37,7 +38,7 @@ int main(int argc, char** argv) {
 
 void fillArray(int A[], int SIZE)
 {
-    int element=0;
+    int element=0;//Starting value of array element. Array goes from 0 to 9. By moding 10 by 10 we reset the element to zero and start over again.
         for(int i=0; i<SIZE; i++)
         {
             A[i]=element++;
@@ -108,3 +109,31 @@ float median(int A[], int SIZE)
     }
        return median; 
 }
+
+int *mode(int A[], int SIZE)
+{
+    int numMode=SIZE%10;
+    int MODE;
+    int *mode= nullptr;
+    mode= new int[numMode];
+    for(int j=0; j<numMode; j++)
+    {
+        int max=1,freq=1,mode=A[0];
+        for(int i=0; i<SIZE; i++)
+        {
+            if(A[i]==A[i+1])
+            {
+                freq++;
+                if(freq>max)
+                {
+                    max=freq;
+                    *(mode+j)=A[i];
+                }
+            }
+        else freq=1;
+        }
+    cout<<"The mode is: "<<*(mode+j)<<endl;   
+    }
+   
+}
+  
