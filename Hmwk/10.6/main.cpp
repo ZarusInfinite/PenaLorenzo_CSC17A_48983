@@ -21,17 +21,17 @@ int numCON(char*);
 
 int main(int argc, char** argv) {
     
-    int const SIZE=100;
-    int vowl,cons;
-    char sentence[SIZE], choice;
+    int const SIZE=100;//Limit length of string.
+    int vowl,cons;//For vowels and consonant.
+    char sentence[SIZE], choice;//Our character array, and our input variable for the menu.
     do{
     cout<<"Enter a string less than 100 charactes."<<endl;
-    cin.getline(sentence, SIZE);
-    menu();
-    cin>>choice;
-    choice=toupper(choice);
-    vowl=numVOW(sentence);
-    cons=numCON(sentence);
+    cin.getline(sentence, SIZE);//Get the cstring.
+    menu();//Call our menu
+    cin>>choice;//User makes a choice in the menu.
+    choice=toupper(choice);//Change input to upper case for the switch statment.
+    vowl=numVOW(sentence);//Get the number of vowels.
+    cons=numCON(sentence);//Get the number of consonants.
     switch(choice)
         {
         case 'A':cout<<"There are a total of "<<vowl<<" vowels in the sentence.";break;
@@ -62,10 +62,10 @@ void menu(){
 
 int numVOW(char * sentence){
     
-    int vow=0,con=0;
+    int vow=0,con=0;//Counters
     for( int i=0; i<strlen(sentence); i++)
     {
-        char temp=toupper(*(sentence+i));
+        char temp=toupper(*(sentence+i));//Change letters to uppercase for switch
         switch(temp)
         {
             case'A':
@@ -73,7 +73,7 @@ int numVOW(char * sentence){
             case'I':
             case'O':
             case'U':
-            vow++;
+            vow++;//count up vowels
             break;
             
         }
@@ -94,15 +94,15 @@ int numCON(char *sentence)
             case'I':
             case'O':
             case'U':
-            vow++;
+            vow++;//count up vowels, although they wont be returned in this function
             break;
-            case' ':
+            case' '://we don't want anything but letters.
             case'.':
             case'?':
             case'!':
             break;
             default:
-            con++;
+            con++;//count up consonants.
         }
     }
       return con;
