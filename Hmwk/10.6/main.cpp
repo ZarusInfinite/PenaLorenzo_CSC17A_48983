@@ -29,17 +29,23 @@ int main(int argc, char** argv) {
     cin.getline(sentence, SIZE);
     menu();
     cin>>choice;
-    toupper(choice);
+    choice=toupper(choice);
     vowl=numVOW(sentence);
     cons=numCON(sentence);
     switch(choice)
         {
         case 'A':cout<<"There are a total of "<<vowl<<" vowels in the sentence.";break;
         case 'B':cout<<"There are a total of "<<cons<<" consonants in the sentence.";break;
-        case 'C':cout<<"There are a total of "<<vowl<<" vowels and "<<cons<<" in the sentence.";break;
-        case 'E':return 0;  
-        default:cout<<"Your choice is invalid"<<endl;
+        case 'C':cout<<"There are a total of "<<vowl<<" vowels and "<<cons<<" consonants in the sentence.";break;
+        case 'D':choice='D';break;
+        case 'E':return 0; break;
+        default:cout<<"Your choice is invalid, please try again."<<endl;
+        menu();
+        cin>>choice;
+        choice=toupper(choice);
+        break;
         }
+    cin.ignore();
     }while(choice=='D');
     
 
@@ -69,8 +75,7 @@ int numVOW(char * sentence){
             case'U':
             vow++;
             break;
-            default:
-            con++;
+            
         }
     }
   return vow; 
@@ -91,9 +96,14 @@ int numCON(char *sentence)
             case'U':
             vow++;
             break;
+            case' ':
+            case'.':
+            case'?':
+            case'!':
+            break;
             default:
             con++;
         }
     }
-      return con++;
+      return con;
 }
