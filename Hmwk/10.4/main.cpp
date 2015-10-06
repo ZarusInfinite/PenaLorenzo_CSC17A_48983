@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     cout<<"There are "<<numWord<<" words."<<endl;
     float avgltr=(static_cast<float>(strlen(charptr)-(numWord-1))/numWord);//Calculates average number of letters.
     cout<<"There are an average of "<<avgltr<<" letters."<<endl;
-    cout<<strlen(charptr);
+    //cout<<strlen(charptr);
     return 0;
 }
 int numWords(char *charptr, int const SIZE)
