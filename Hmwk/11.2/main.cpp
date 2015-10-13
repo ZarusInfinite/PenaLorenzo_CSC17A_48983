@@ -4,7 +4,6 @@
  *
  * Created on October 12, 2015, 1:35 PM
  */
-//THINGS TO FIX:skips input of second movie title
 
 #include <cstdlib>
 #include <iostream>
@@ -40,8 +39,12 @@ movieData *fillMovie(){
     getline(cin,Movie->Director);
     cout<<"The year it was released."<<endl;
     cin>>Movie->Year;
-    cout<<"And finally the movie's runtime in minutes."<<endl;
+    cout<<"The movie's runtime in minutes."<<endl;
     cin>>Movie->Runtime;
+    cout<<"What was the movie's budget(in millions)?"<<endl;
+    cin>>Movie->cost;
+    cout<<"What was the revenue within the first year(in millions)?"<<endl;
+    cin>>Movie->revenue;
     return Movie;
 }
 void displayInfo(movieData* Movie){
@@ -50,5 +53,7 @@ void displayInfo(movieData* Movie){
     cout<<"DIRECTOR: "<<Movie->Director<<endl;
     cout<<"YEAR: "<<Movie->Year<<endl;
     cout<<"RUNTIME: "<<Movie->Runtime<<endl;
+    cout<<"BUDGET: "<<Movie->cost<<" million"<<endl;
+    cout<<"REVENUE: "<<Movie->revenue<<" million"<<endl;
     cout<<endl;
 }
