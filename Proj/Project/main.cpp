@@ -7,44 +7,70 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <ctime>
+#include <iomanip>
 // User Libraries
 #include "card.h"
 #include "dealer.h"
 #include "player.h"
 
 //Function Prototypes
-void createCards(int, card*);
+void createDeck(int, card*);
 
 
 using namespace std;
-/*
- * 
- */
+
 int main(int argc, char** argv) {
     
+    srand(static_cast<unsigned int>(time(0)));
     const int numCards=52;
-    int numPlyr=1;
+    int numPlyr;
     char response;
     
-    player YOU;
-    dealer Dealer;
+    player YOU;//The player you control
+    dealer Dealer;//Our dealer
     card *Cards= new card[numCards];
+    player *AI=new player[numPlyr-1];//Other players besides you.
     cout<<"You're playing BlackJack!"<<endl;
-    createCards(numCards,Cards);
-    //create deck
+    cout<<"What's your name?"<<endl;
+    getline(cin,YOU.name);
+    cout<<"Alright "<<YOU.name<<", how many people are playing tonight?"<<endl;
+    cin>>numPlyr;
+    //Place bets
+    cout<<"It's time for the players to place their bets!"<<endl;
+    cout<<"Place your bet.(Minimum of $5, Maximum of $100."<<endl;
+    cin>>YOU.bet;
+    //Other players place their bets
+   
+    for(int i;i<(numPlyr-1);i++)
+    {
+        int maxbet=100;
+        int minbet=5;
+       /* *(AI+i)->bet=(rand()%maxbet-minbet+1)+minbet;
+        cout<<*(AI+i)->bet;*/
+    }
+    //Deal cards
+    
+    
+            
+    
+    createDeck(numCards,Cards);
+    
+    
+ 
     
     
     return 0;
 }
 
-void createCards(int numCards, card *Cards){
+void createDeck(int numCards, card *Cards){
     //Get Facevalue
-    for(int j=0; j<numCards; j++){
+    for(int i=0; i<numCards; i++){
         
        char crdvalues[13]={'A','2','3','4','5','6',
                      '7','8','9','T','J','Q','K'};
         
-        Cards[j].faceval=crdvalues[j%13];
+        Cards[i].faceval=crdvalues[i%13];
     }
     //Get suits
     for(int i= 0; i<numCards; i++)
@@ -70,7 +96,8 @@ void createCards(int numCards, card *Cards){
     //Display Cards
     for(int x=0; x<numCards; x++)
     {
-        cout<<"Card "<<x+1<<" facevalue: "<<Cards[x].faceval<</*" numval: "<<Cards[x].numval<< */" suit: "<<Cards[x].suit<<endl;    
+        cout<<"Card "<<x+1<<" facevalue: "<<Cards[x].faceval<< " suit: "<<Cards[x].suit<<endl;    
            
     }
+
 }

@@ -11,7 +11,7 @@
 struct card{
     
     char suit;
-    char numval;
+    //char numval;
     char faceval;
   
 };
