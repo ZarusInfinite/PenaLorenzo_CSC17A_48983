@@ -15,7 +15,8 @@
 #include "dealer.h"
 #include "player.h"
 //Function Prototypes
-void createDeck(int, card*);
+void createDeck(const int, card*);
+int shuffleCards();
 int dealCards(card*);
 float AIbet(int);
 
@@ -35,7 +36,7 @@ int main(int argc, char** argv) {
     dealer Dealer;//The dealer, controlled by the computer of course.
     card *Deck= new card[numCards];//Create variable for our deck of cards.
     player *AI=new player[numPlyr-1];//Other players besides you.
-    //Creat game assets
+    //Create game assets
     createDeck(numCards,Deck);//Create 52 cards using the card structure.
     
     //Prepare for the game
@@ -44,12 +45,17 @@ int main(int argc, char** argv) {
     getline(cin,YOU.name);
     cout<<"Alright "<<YOU.name<<", how many people are playing tonight?"<<endl;
     cin>>numPlyr;
+    while(numPlyr<1)
+    {
+        cout<<"Little jokester huh? Seriously how many people are playing?"<<endl;
+        cin>>numPlyr;
+    }
     if(numPlyr>1)areAI=true;
     
     //Start the game!
     //Place bets
     cout<<"It's time for the players to place their bets!"<<endl;
-    cout<<"Place your bet.(Minimum of $5, Maximum of $100."<<endl;
+    cout<<"Place your bet.(Minimum of $5, Maximum of $100)"<<endl;
     cin>>YOU.bet;//Place your bet
     while(YOU.bet < 5 || YOU.bet > 100)//Input Validation 
     { 
@@ -60,26 +66,18 @@ int main(int argc, char** argv) {
     //Other players place their bets
     if(areAI=true)
     {
-        for(int i;i<(numPlyr-1);i++)
+        for(int i=0;i<(numPlyr-1);i++)
         {
         AI[i].bet==AIbet(numAI);
         }
     }
-    //Deal cards
-    //Get your cards 
-    //OVER HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    for(int i=0; i<2;i++)
-    {
-        int index;
-        index=dealCards(Deck);
-        //YOU.hand=Deck[index].numval;
-        
-        cout<<"Your hand: Card 1: Suit: "<<Deck[index].suit<<" Face Value: ";
-        cout<<Deck[index].faceval<<" Number Value: "<<Deck[index].numval;
-        if(Deck[index].numval==1)
-        cout<<" Alternative Number Value: "<<Deck[index].altnumval<<endl;    
-    }
-    
+    //Get YOUR cards 
+    cout<<"The cards have been dealt. Here's your hand: "<<endl;
+    cout<<endl;
+    YOU.hand=dealCards(Deck);
+    cout<<endl;
+    cout<<"You have a total of "<<YOU.hand<<" points"<<endl;
+   
     //Deallocate memory
     delete [] Deck;
     delete [] AI;
@@ -87,7 +85,7 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-void createDeck(int numCards, card *Deck)
+void createDeck(const int numCards, card *Deck)
 {
     //Get Facevalue
     for(int i=0; i<numCards; i++)
@@ -113,26 +111,19 @@ void createDeck(int numCards, card *Deck)
         Deck[i].altnumval=altnum;
     }
    
-    /*Display Cards
-    for(int i=0; i<numCards; i++)
-    {
-        cout<<"Card "<<i+1<<" Facevalue: "<<Deck[i].faceval<< " Suit: "<<Deck[i].suit;
-        cout<<" Numbervalue: "<<Deck[i].numval<<" Alt Numbervalue: "<<Deck[i].altnumval<<endl;   
-           
-    }
-    */
 }
 
-int dealCards(card *Deck)
+int shuffleCards()
 {
-//Deal cards
+//Shuffle cards
     for(int i=0;i<2;i++)//For initial deal
     {
-        int index;
+        int index[i];
         int minCrd=0;
         int maxCrd=51;
-        index=(rand()%maxCrd-minCrd+1)+minCrd;
-        return index;
+        index[i]=(rand()%maxCrd-minCrd+1)+minCrd;
+        if(index[i]==index[i+1])i--;//In case we get duplicates
+        return index[i];
         //cout<<Deck[index].faceval<<" "<<Deck[index].suit<<endl;
     }
 }
@@ -148,3 +139,18 @@ float AIbet(int numAI)
         return bet;
     }
 }
+int dealCards(card* Deck)
+{
+   int total=0;
+   for(int i=0; i<2;i++)
+    {
+        int index=shuffleCards();
+        cout<<"Card "<<i+1<<" : Suit: "<<Deck[index].suit<<" Face Value: ";
+        cout<<Deck[index].faceval<<" Number Value: "<<Deck[index].numval;
+        if(Deck[index].numval==1)
+        cout<<" Alternative Number Value: "<<Deck[index].altnumval<<endl;
+        cout<<endl;
+        total+=Deck[index].numval;
+    }
+ return total;
+}    
