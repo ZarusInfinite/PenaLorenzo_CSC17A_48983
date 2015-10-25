@@ -7,11 +7,15 @@
 
 #ifndef CARD_H
 #define	CARD_H
+#include <string>
+
+using namespace std;
 
 struct card{
     
     char suit;
-    //char numval;
+    int numval;
+    int altnumval;//Used for an Ace since it's rank can be 1 or 11;
     char faceval;
   
 };

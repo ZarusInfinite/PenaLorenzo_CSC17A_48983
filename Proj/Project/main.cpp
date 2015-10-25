@@ -9,13 +9,14 @@
 #include <iostream>
 #include <ctime>
 #include <iomanip>
+#include <string>
 // User Libraries
 #include "card.h"
 #include "dealer.h"
 #include "player.h"
-
 //Function Prototypes
 void createDeck(int, card*);
+void dealCards(card*);
 
 
 using namespace std;
@@ -26,16 +27,20 @@ int main(int argc, char** argv) {
     const int numCards=52;
     int numPlyr;
     char response;
-    
+    //Establish parties
     player YOU;//The player you control
     dealer Dealer;//Our dealer
-    card *Cards= new card[numCards];
+    card *Deck= new card[numCards];//Create our deck of cards.
     player *AI=new player[numPlyr-1];//Other players besides you.
+    createDeck(numCards,Deck);
+    //Prepare for the game
     cout<<"You're playing BlackJack!"<<endl;
     cout<<"What's your name?"<<endl;
     getline(cin,YOU.name);
     cout<<"Alright "<<YOU.name<<", how many people are playing tonight?"<<endl;
     cin>>numPlyr;
+    //Start the game!
+    
     //Place bets
     cout<<"It's time for the players to place their bets!"<<endl;
     cout<<"Place your bet.(Minimum of $5, Maximum of $100."<<endl;
@@ -46,58 +51,63 @@ int main(int argc, char** argv) {
     {
         int maxbet=100;
         int minbet=5;
-       /* *(AI+i)->bet=(rand()%maxbet-minbet+1)+minbet;
-        cout<<*(AI+i)->bet;*/
+        *(AI+i)->bet=(rand()%maxbet-minbet+1)+minbet;
+        cout<<static_cast<int>(*(AI+i)->bet);
     }
-    //Deal cards
-    
-    
-            
-    
-    createDeck(numCards,Cards);
-    
-    
- 
-    
-    
+     */
+    dealCards(Deck);//Deal cards
+   
+    delete [] Deck;
+    delete [] AI;
+   
     return 0;
 }
 
-void createDeck(int numCards, card *Cards){
+void createDeck(int numCards, card *Deck)
+{
     //Get Facevalue
-    for(int i=0; i<numCards; i++){
-        
+    for(int i=0; i<numCards; i++)
+    { 
        char crdvalues[13]={'A','2','3','4','5','6',
                      '7','8','9','T','J','Q','K'};
-        
-        Cards[i].faceval=crdvalues[i%13];
+        Deck[i].faceval=crdvalues[i%13];
     }
     //Get suits
     for(int i= 0; i<numCards; i++)
     {
         char suit[4]={'S','H','D','C'};
-        Cards[i].suit=suit[i%4];
+        Deck[i].suit=suit[i%4];
     }
-    /*Get numbers
-    for(int z; z<numCards; z++)
+    //Get numbers
+    for(int i=0; i<numCards; i++)
     {
-        int n, number;
-     if(n<1||n>52)number=1;
-    else number=n;
-     char numVal=(number-1)%13+1;
-    if(numVal>10)numVal=10;
-    Cards[z].numval=static_cast<char>(numVal);
-        
-        //Cards[z].numval=Cards[z].faceval;
-        //if(Cards[z].faceval=='A')Cards[z].numval==(1||11);
-        //if(Cards[z].faceval==('T'||'J'||'Q'||'K'))static_cast<int>(Cards[z].numval==10);
+        int number=1+(i%13);
+        int altnum=0;
+        if(number==1)altnum=11;
+        if(number>10)number=10;
+        Deck[i].numval=number;
+        Deck[i].altnumval=altnum;
     }
-    */
-    //Display Cards
-    for(int x=0; x<numCards; x++)
+   
+    /*Display Cards
+    for(int i=0; i<numCards; i++)
     {
-        cout<<"Card "<<x+1<<" facevalue: "<<Cards[x].faceval<< " suit: "<<Cards[x].suit<<endl;    
+        cout<<"Card "<<i+1<<" Facevalue: "<<Deck[i].faceval<< " Suit: "<<Deck[i].suit;
+        cout<<" Numbervalue: "<<Deck[i].numval<<" Alt Numbervalue: "<<Deck[i].altnumval<<endl;   
            
     }
+    */
+}
 
+void dealCards(card *Deck)
+{
+//Deal cards
+    for(int i=0;i<2;i++)//For initial deal
+    {
+        int index;
+        int minCrd=0;
+        int maxCrd=51;
+        index=(rand()%maxCrd-minCrd+1)+minCrd;
+        cout<<Deck[index].faceval<<" "<<Deck[index].suit<<endl;
+    }
 }

@@ -13,7 +13,6 @@ using namespace std;
 
 struct dealer
 {
-    string name;
     int points;
     
 };
