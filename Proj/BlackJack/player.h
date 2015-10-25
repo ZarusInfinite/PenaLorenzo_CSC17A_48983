@@ -14,7 +14,7 @@ struct player{
     
     string name;
     float bet;
-    int points;
+    int hand;
     
 };
 

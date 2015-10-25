@@ -16,47 +16,71 @@
 #include "player.h"
 //Function Prototypes
 void createDeck(int, card*);
-void dealCards(card*);
+int dealCards(card*);
+float AIbet(int);
 
 
 using namespace std;
 
 int main(int argc, char** argv) {
-    
+    //Pre-game preparations
     srand(static_cast<unsigned int>(time(0)));
     const int numCards=52;
-    int numPlyr;
-    char response;
-    //Establish parties
-    player YOU;//The player you control
-    dealer Dealer;//Our dealer
-    card *Deck= new card[numCards];//Create our deck of cards.
+    int numPlyr;//Holds the number of player
+    bool areAI;//Whether there are computer controlled players.
+    int numAI=numPlyr-1;//Number of computer controlled players. Basically everyone else besides the dealer and player character.
+    
+    //Establishing parties
+    player YOU;//The player controlled by the user
+    dealer Dealer;//The dealer, controlled by the computer of course.
+    card *Deck= new card[numCards];//Create variable for our deck of cards.
     player *AI=new player[numPlyr-1];//Other players besides you.
-    createDeck(numCards,Deck);
+    //Creat game assets
+    createDeck(numCards,Deck);//Create 52 cards using the card structure.
+    
     //Prepare for the game
-    cout<<"You're playing BlackJack!"<<endl;
+    cout<<"Welcome to BlackJack!"<<endl;
     cout<<"What's your name?"<<endl;
     getline(cin,YOU.name);
     cout<<"Alright "<<YOU.name<<", how many people are playing tonight?"<<endl;
     cin>>numPlyr;
-    //Start the game!
+    if(numPlyr>1)areAI=true;
     
+    //Start the game!
     //Place bets
     cout<<"It's time for the players to place their bets!"<<endl;
     cout<<"Place your bet.(Minimum of $5, Maximum of $100."<<endl;
-    cin>>YOU.bet;
-    //Other players place their bets
-   
-    for(int i;i<(numPlyr-1);i++)
-    {
-        int maxbet=100;
-        int minbet=5;
-        *(AI+i)->bet=(rand()%maxbet-minbet+1)+minbet;
-        cout<<static_cast<int>(*(AI+i)->bet);
+    cin>>YOU.bet;//Place your bet
+    while(YOU.bet < 5 || YOU.bet > 100)//Input Validation 
+    { 
+        cout<<"Sorry but you cannot place that bet as it is beyond the established bounds."<<endl;
+        cout<<"Please place a bet of a lower or higher amount"<<endl;
+        cin>>YOU.bet;
     }
-     */
-    dealCards(Deck);//Deal cards
-   
+    //Other players place their bets
+    if(areAI=true)
+    {
+        for(int i;i<(numPlyr-1);i++)
+        {
+        AI[i].bet==AIbet(numAI);
+        }
+    }
+    //Deal cards
+    //Get your cards 
+    //OVER HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    for(int i=0; i<2;i++)
+    {
+        int index;
+        index=dealCards(Deck);
+        //YOU.hand=Deck[index].numval;
+        
+        cout<<"Your hand: Card 1: Suit: "<<Deck[index].suit<<" Face Value: ";
+        cout<<Deck[index].faceval<<" Number Value: "<<Deck[index].numval;
+        if(Deck[index].numval==1)
+        cout<<" Alternative Number Value: "<<Deck[index].altnumval<<endl;    
+    }
+    
+    //Deallocate memory
     delete [] Deck;
     delete [] AI;
    
@@ -99,7 +123,7 @@ void createDeck(int numCards, card *Deck)
     */
 }
 
-void dealCards(card *Deck)
+int dealCards(card *Deck)
 {
 //Deal cards
     for(int i=0;i<2;i++)//For initial deal
@@ -108,6 +132,19 @@ void dealCards(card *Deck)
         int minCrd=0;
         int maxCrd=51;
         index=(rand()%maxCrd-minCrd+1)+minCrd;
-        cout<<Deck[index].faceval<<" "<<Deck[index].suit<<endl;
+        return index;
+        //cout<<Deck[index].faceval<<" "<<Deck[index].suit<<endl;
+    }
+}
+
+float AIbet(int numAI)
+{
+    for(int i=0; i<numAI; i++)
+    {
+        float bet;//
+        int minBet=5;
+        int maxBet=100;
+        bet=(rand()%maxBet-minBet+1)+ minBet;
+        return bet;
     }
 }

@@ -4,6 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>card.h</itemPath>
+      <itemPath>dealer.h</itemPath>
+      <itemPath>deck.h</itemPath>
+      <itemPath>player.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"

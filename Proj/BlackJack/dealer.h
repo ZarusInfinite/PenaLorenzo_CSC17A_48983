@@ -13,8 +13,8 @@ using namespace std;
 
 struct dealer
 {
-    int points;
-    
+    int hand;
+        
 };
 
 
