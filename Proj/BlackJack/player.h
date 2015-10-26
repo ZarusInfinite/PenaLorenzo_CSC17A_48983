@@ -14,7 +14,7 @@ struct player{
     
     string name;
     float bet;//Initial bet
-    int hand=0;//Holds the rank in a player's current hand
+    int hand;//Holds the rank in a player's current hand
     
 };
 
