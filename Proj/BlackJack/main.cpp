@@ -30,18 +30,21 @@ int main(int argc, char** argv) {
     //Pre-game preparations
     srand(static_cast<unsigned int>(time(0)));
     const int numCards=52;
-    //int inideal=2;//Used for dealing the initial 2 cards later on.
-    int deal;//Used for when someone wants a hit.
+    bool won,lost;
     int numPlyr;//Holds the number of player
-    
+    int deal;//Used for when someone wants a hit.
+
     //Establishing parties
     player YOU;//The player controlled by the user
     dealer Dealer;//The dealer, controlled by the computer of course.
-    card *Deck= new card[numCards];//Create variable for our deck of cards.
-    player *AI=new player[numPlyr-1];//Other players besides you.
+    card *Deck= nullptr;
+    player *AI= nullptr;
+    Deck= new card[numCards];//Create variable for our deck of cards.
+    AI=new player[numPlyr-1];//Other players besides you.
+    //bool ace;
     
     //Create game assets
-    createDeck(numCards,Deck);//Create 52 cards using the card structure.
+    createDeck(numCards,Deck);//Create deck.
     
     //Prepare for the game
     cout<<"Welcome to BlackJack!"<<endl;
@@ -65,8 +68,8 @@ int main(int argc, char** argv) {
     cout<<endl;
     //Start the game!
     //Place bets
-    cout<<"It's time for the players to place their bets!"<<endl;
-    cout<<"Place your bet.(Minimum of $5, Maximum of $100)"<<endl;
+    cout<<"It's time to place your bet!"<<endl;
+    cout<<"(Minimum of $5, Maximum of $100)"<<endl;
     cin>>YOU.bet;//Place your bet
     while(isalpha(YOU.bet))
     {
@@ -98,12 +101,39 @@ int main(int argc, char** argv) {
         cout<<endl;
     }
     cout<<"You have a total of "<<YOU.hand<<" points"<<endl;
-    
+  
+    //Next step: hit or stand?
+    int choice;
+    cout<<"Now do you want to take your chances and take a hit, or stick with what you got and stand?"<<endl;
+    cout<<"Press 1 for hit or 0 for stand."<<endl;
+    cin>>choice;
+    while((choice < 1) || (choice > 2))
+    {
+        cout<<"Sorry but that's not a correct response"<<endl;
+        cout<<"Please press 1 for hit or 2 for stand."<<endl;
+        cin>>choice;
+    }
+    while(choice==1)
+    {
+        int n=3;
+        int more=shuffleCards();
+        YOU.hand+=Deck[more].numval;
+        cout<<"Alright Adding this card to your hand..."<<endl;
+        cout<<"Card "<<n<<":  Suit: "<<Deck[more].suit<< " Face Value: ";
+        cout<<Deck[more].faceval<<" Number Value: "<<Deck[more].numval;
+        if(Deck[more].numval==1)
+        {
+        cout<<"You have an Ace! Remember you can change it's to 1 or 11.";
+        cout<<"choose wisely"<<endl;
+        }
+        cout<<endl;
+        cout<<"Are you done, or do you want to go for another hit?"<<endl;
+        cin>>choice;
+    }      
     //Get AI cards
   
         for(int x=0;x<(numAI);x++)
         {
-            bool ace;
             int total=0;
             for(int z=0; z<2;z++)
             {
@@ -111,7 +141,6 @@ int main(int argc, char** argv) {
                 total+=Deck[index].numval;
                 if(Deck[index].altnumval>1)
                 {
-                    ace=true;
                     if(total <= 10)
                     {
                         total+=10;
@@ -120,44 +149,22 @@ int main(int argc, char** argv) {
             }   
             AI[x].hand=total;
         }
-    
+
     //Get Dealer cards
     for(int a=0;a<2;a++)
     {
         int index=shuffleCards();
         Dealer.hand+=Deck[index].numval;
+        if(Deck[index].altnumval>1)
+        {
+            if(Dealer.hand <= 10)
+            {
+                Dealer.hand+=10;
+            }
+        }    
     }
     
-    //Next step: hit or stand?
-    int choice;
-    cout<<"Now do you want to take your chances and take a hit, or stick with what you got and stand?"<<endl;
-    cout<<"Press 1 for hit or 0 for stand."<<endl;
-    cin>>choice;
-    //cin.ignore();
-    //choice=toupper(choice);
-    while(choice < 1 || choice > 2)
-    {
-        cout<<"Sorry but that's not a correct response"<<endl;
-        cout<<"Please press 1 for hit or 2 for stand."<<endl;
-        cin>>choice;
-    }
-    if(choice==1)
-    {
-        int more=shuffleCards();
-        YOU.hand+=Deck[more].numval;
-        cout<<"Adding this card to your hand..."<<endl;
-        cout<<"Card 3: "<<" Suit: "<<Deck[more].suit<< " Face Value: ";
-        cout<<Deck[more].faceval<<" Number Value: "<<Deck[more].numval;
-        if(Deck[more].numval==1)
-        {
-        cout<<"You have an Ace! Remember you can change it's to 1 or 11.";
-        cout<<"choose wisely"<<endl;
-        }
-        cout<<endl;
-        
-    }   
-    else {cout<<"Alright"<<endl;}
-    //Calculate card value of ai
+    //Calculate card value of ais
     int z, min;
     for (int i = 0; i <numAI; i++)
     {
@@ -179,7 +186,30 @@ int main(int argc, char** argv) {
         cout<<"AI cards:"<<endl;
         cout<<AI[i].hand<<endl;
     }
-   
+    //Compare Cards
+    cout<<"Seems like ";
+    for(int l=0;l<numPlyr;l++)
+    {
+        //int maxplr=0;
+        if(YOU.hand < AI[l].hand)
+        {
+            cout<<" you lost. "<<endl;
+        }
+    }
+    if(YOU.hand>AI[numAI].hand)
+    {
+        cout<<"You did better than the other players! But what about against the dealer?"<<endl;
+        if(YOU.hand<Dealer.hand)
+        {
+            cout<<"The dealer has "<<Dealer.hand<<" points, which is more than you."<<endl;
+            cout<<"Seems like you lost."<<endl;
+        }
+        else{
+            cout<<"The dealer has "<<Dealer.hand<<" points."<<endl;
+            cout<<"You won!"<<endl;
+        }
+    }
+    
     //Deallocate memory
     delete Deck;
     delete AI;
@@ -216,13 +246,10 @@ void createDeck(const int numCards, card *Deck)
 
 int shuffleCards()
 {
-//Shuffle cards
         int index;
         int minCrd=0;
         int maxCrd=51;
         index=(rand()%maxCrd-minCrd+1)+minCrd;
-        //if(index[i]==index[i-1])i--;//In case we get duplicates
         return index;
-    
 }
 
