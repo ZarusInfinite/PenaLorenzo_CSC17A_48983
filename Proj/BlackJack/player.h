@@ -13,8 +13,8 @@ using namespace std;
 struct player{
     
     string name;
-    float bet;
-    int hand;
+    float bet;//Initial bet
+    int hand=0;//Holds the rank in a player's current hand
     
 };
 

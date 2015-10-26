@@ -6,7 +6,6 @@
                    projectFiles="true">
       <itemPath>card.h</itemPath>
       <itemPath>dealer.h</itemPath>
-      <itemPath>deck.h</itemPath>
       <itemPath>player.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -47,8 +46,6 @@
       </item>
       <item path="dealer.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="deck.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="player.h" ex="false" tool="3" flavor2="0">
@@ -77,8 +74,6 @@
       <item path="card.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="dealer.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="deck.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
