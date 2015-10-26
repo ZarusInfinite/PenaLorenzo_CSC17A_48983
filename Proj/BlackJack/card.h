@@ -13,10 +13,10 @@ using namespace std;
 
 struct card{
     
-    char suit;
-    int numval;
-    int altnumval;//Used for an Ace since it's rank can be 1 or 11;
-    char faceval;
+    char *suit;
+    int *numval;
+    int *altnumval;//Used for an Ace since it's rank can be 1 or 11;
+    char *faceval;
   
 };
 
