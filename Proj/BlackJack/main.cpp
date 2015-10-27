@@ -127,8 +127,15 @@ int main(int argc, char** argv) {
     cout<<"Dealer's hand: "<<Dealer<<endl;
         for(int i=0;i<numAI;i++)
         {
-            cout<<"Player "<<i+2<<"'s hand rank: "<<AI[i]<<endl;
-        }   
+            if(AI[i]!=0)
+            {
+                cout<<"Player "<<i+2<<"'s hand rank: "<<AI[i]<<endl; 
+            }
+            else
+            {
+                cout<<"Player "<<i+2<<" bust!"<<endl;
+            }
+        }    
     
     
     delete Deck;
