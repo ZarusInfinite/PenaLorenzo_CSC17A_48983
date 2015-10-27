@@ -5,33 +5,36 @@
  * Created on October 18, 2015, 1:47 PM
  */
 
+/********THINGS TO FIX: placeBet not reading numbers properly
+ * bool compare: not going through if statements properly
+ * choice 'H' for nextStep breaks program
+ * AI hands always 0
+ * 
+ *******/
+
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
 #include <cctype>
-#include <cstring>
+#include <string>
 // User Libraries
 #include "card.h"
-#include "dealer.h"
 #include "player.h"
-#include "ai.h"
+
 //Function Prototypes
 void info();
 void createDeck(const int, card*);
 int prep(player,int);
-void getCards(player,card*);
-void nextStep(player,card*,float,bool);
-void getCards(player,card*);
-void nextStep(player,card*,float,bool);
-void sortAI(ai*,int);
+int nextStep(player,card*,float,bool);
+int getCards(player,card*);
+void sortAI(int *,int);
 int shuffleCards();
-int getAICrd(ai*,card*);
-int getDealCrd(dealer,card*);
+int getAICrd(card*);
+int getDealCrd(card*);
 float placeBet(float);
-bool blackjack(ai*,dealer,int);
-bool compare(player,ai*,dealer,int);
+bool blackjack(int*,int,int);
+bool compare(player,int*,int,int);
 card *fillDeck(int);
-ai *getAIs(int);
 
 using namespace std;
 
@@ -39,83 +42,98 @@ int main(int argc, char** argv) {
     
     //Pre-game preparations
     srand(static_cast<unsigned int>(time(0)));
-    int numCards=52;//Number of cards in our deck
-    bool win;
+    const int numCards=52;//Number of cards in our deck
+    bool win,bust,push;
     int numPlyr;//Holds the number of player
     int deal;//Used for when someone wants a hit.
-    float money;//Your money to bet.
+    int moreCards;//Used to add value to hand after hits
+    float money=100;//Your money to bet.
 
     //Establishing parties
     player YOU;//The player controlled by the user
-    dealer Dealer;//The dealer, controlled by the computer of course.
+    int Dealer;//Memory allocated for the dealer's hand
+    int *AI= nullptr;//Memory allocated for the AIs' hand
     
-     //Prepare for the game
-    int numAI=prep(YOU,numPlyr);
+    int numAI=prep(YOU,numPlyr);//Get the number of AIs
     
-    //Allocate memory for structures
-    card *Deck=fillDeck(numCards);//Create variable for our deck of cards.
-    ai *AI=new ai[numAI];//Other players besides you.
+    //Allocate memory for our deck
+    card *Deck=fillDeck(numCards);//Fill the deck of cards
  
     //Start the game!
     //Place bets
     YOU.bet=placeBet(money);
     
     //Get YOUR cards 
-    getCards(YOU,Deck);
-  
-    //Next step: hit or stand?
-    nextStep(YOU,Deck,money,win);
-    if(YOU.hand>21)
-    {
-        cout<<"Looks like you bust.Better luck next time"<<endl;
-        cout<<endl;
-        win=false;
-    }
+    YOU.hand=getCards(YOU,Deck);
+    
+    //Get Dealer cards
+    Dealer=getDealCrd(Deck);
     
     //Get AI cards
-    for(int i=0; i<numAI;i++)
+    AI=new int[numAI];
+    for(int i=0;i<numAI;i++)
     {
-        AI->hand[i]=getAICrd(AI,Deck);
+        AI[i]=getAICrd(Deck);
     }
-      
-    //Get Dealer cards
-    Dealer.hand=getDealCrd(Dealer,Deck);
-    
-    //Calculate card value of ais
+    //Adjust AI Cards
+        for(int l=0;l<numAI;l++)
+        {
+            if(AI[l] > 21)
+            {
+                AI[l]=0;
+            }
+        }
+    //sort
     sortAI(AI,numAI);
     
-    //Compare Cards
-    for(int l=0;l<numAI;l++)
-    {
-        if(AI->hand[l] > 21)
-        {
-            AI->hand[l]=0;
-        }
-    }
-    
+    //Next step: hit or stand?
+    YOU.hand+=moreCards=nextStep(YOU,Deck,money,win);
+
     //BLACKJACK!!!
     if(YOU.hand==21)
     {
-        win=blackjack(AI,Dealer,numAI);
-    }
+        push=blackjack(AI,Dealer,numAI);
+    }   
+
     //Compare with other players
     win=compare(YOU,AI,Dealer,numAI);
-    //If you lost
-    if(win=false)
+
+    //If you lose
+    if(win==false)
     {
+        if(YOU.hand>21)//If you bust
+        {
+            cout<<"Looks like you bust!"<<endl;
+            cout<<endl;
+        }
         cout<<"You lost. You now have $"<<money-YOU.bet<<"."<<endl;
-        //Deallocate memory
-        delete Deck;
-        delete AI;
-        return 0;
     }
-    else//if you win
+    else if(win==true)//If you win
     {
-        //Deallocate memory
-        delete Deck;
-        delete AI;
-        return 0;
+        cout<<"Congrats! You won!"<<endl;
+        money+=(YOU.bet/2);
+        cout<<"You now have $"<<money<<"."<<endl;
     }
+    else//If push
+    {
+        cout<<"Looks like it's a push. You keep your money"<<endl;
+    }
+            
+        
+           
+        
+ //COMPETITION'S CARDS  
+    cout<<"Your hand: "<<YOU.hand<<endl;
+    cout<<"Dealer's hand: "<<Dealer<<endl;
+        for(int i=0;i<numAI;i++)
+        {
+            cout<<"Player "<<i+2<<"'s hand rank: "<<AI[i]<<endl;
+        }   
+    
+    
+    delete Deck;
+    delete [] AI;
+    return 0;
 }
 /********************************************************************************************************************************************************/
 /*FUNCTION DEFINITIONS
@@ -154,11 +172,27 @@ card *fillDeck(int n)
     return str;
 }
 /********************************************************************************************************************************************************/
-ai *getAIs(int n)
+int getAICrd(card* Deck)
 {
-    ai *plyr=new ai;
-    plyr->hand=new int[n];
-    return plyr;
+  int total=0;
+  for(int z=0; z<2;z++)
+  {
+    int index=shuffleCards();
+    total+=Deck->numval[index];
+    if(Deck->altnumval[index]>1)
+       {
+           if(total <= 10)
+           {
+            total+=10;
+           }
+       }
+    if(total<17)
+       {
+         int index=shuffleCards();
+         total+=Deck->numval[index];
+        }       
+   }        
+    return total;   
 }
 /********************************************************************************************************************************************************/
 void info()
@@ -180,120 +214,125 @@ void info()
     cout<<"FACEVALUE:     A: Ace   T: 10   J: Jack   Q: Queen   K: King"<<endl;
     cout<<"SUITS:     H: Hearts  D: Diamonds  S: Spades  C: Clubs"<<endl;
     cout<<endl;
-    cout<<"Have fun!"<<endl;
+    cout<<"Press any other key than H to move on."<<endl;
     cout<<endl;
 }
 
 /********************************************************************************************************************************************************/
 int prep(player YOU,int numPlyr)
 {
+    char choice;
     cout<<"Welcome to BlackJack!"<<endl;
     cout<<"What's your name?"<<endl;
     getline(cin,YOU.name);
-    cout<<"Alright "<<YOU.name<<", here's some info"<<endl;
-    info();
+    cout<<"Alright "<<YOU.name<<", have you played Blackjack before?"<<endl;
+    cout<<"If not, press H for some help. But if you're ready to go, press any other letter."<<endl;
+    cin>>choice;
+    while(!isalpha(choice))
+    {
+        cout<<"Sorry but that's not a correct response. Please try again."<<endl;
+        cin>>choice;
+    }
+    while(toupper(choice)=='H')
+    {
+        info();
+        cin>>choice;
+    }
     int AIs;
     //Players
     cout<<"How many people are playing tonight? A maximum of 10 people can play."<<endl;
     cin>>numPlyr;
     AIs=numPlyr-1;//Number of computer controlled players. Basically everyone else besides the dealer and player character.
-    while(numPlyr<1)
+    while(numPlyr < 1 || numPlyr >10)
     {
-        cout<<"Little jokester huh? Seriously how many people are playing?"<<endl;
-        cin>>numPlyr;
-    }
-    while(numPlyr>10)
-    {
-        cout<<"That's too many players! Might want to get a smaller group."<<endl; 
+        cout<<"Sorry but that's an incorrect response. Please try again."<<endl;
         cin>>numPlyr;
     }
     cout<<numPlyr<<" players? Okay! Let's play."<<endl;
     cout<<endl;
     return AIs;
+        
 }
 /********************************************************************************************************************************************************/
-void getCards(player YOU, card *Deck)
+int getCards(player YOU, card *Deck)
 {
     cout<<"The cards have been dealt. Here's your hand: "<<endl;
     cout<<endl;
+    int total=0;
     for(int i=0; i<2;i++)
     {
         int index=shuffleCards();
         cout<<"Card "<<i+1<<" : Suit: "<<Deck->suit[index]<<" Face Value: ";
-        cout<<Deck->faceval[index]<<" Number Value: "<<Deck->numval[index];
+        cout<<Deck->faceval[index]<<" Number Value: "<<Deck->numval[index]<<endl;
         if(Deck->altnumval[index]>1)
         {
-            cout<<endl;
             cout<<"You have an Ace! Remember you can change it's to 1 or 11.";
             cout<<"choose wisely."<<endl;
         }
-        cout<<endl;
-        YOU.hand+=Deck->numval[index];
+        total+=Deck->numval[index];
     }
-    cout<<"You have a total of "<<YOU.hand<<" points"<<endl;
+    cout<<endl;
+    return total;
 }
 /********************************************************************************************************************************************************/
-void nextStep(player YOU, card *Deck,float money,bool win)
+int nextStep(player YOU, card *Deck,float money,bool win)
 {
+    int total=0;
     char choice;
     cout<<"Now do you want to take your chances and take a hit, or stick with what you got and stand?"<<endl;
-    cout<<"Press h for hit or s for stand."<<endl;
+    cout<<"Press H for hit or S for stand."<<endl;
     cin>>choice;
-    while((choice != 'h') || (choice != 's'))
+    while(!isalpha(choice))
     {
-        cout<<"Sorry but that's not a correct response"<<endl;
-        cout<<"Please press h for hit or s for stand."<<endl;
+        cout<<"Sorry but that's not even a letter. Please try again."<<endl;
         cin>>choice;
     }
-    while(choice=='h')
+    while(toupper(choice) != 'H' && toupper(choice)!='S')
+    {
+        cout<<"Please press H or S."<<endl;
+        cin>>choice;
+    }
+    while(toupper(choice)=='H')
     {
         int more=shuffleCards();
-        YOU.hand+=Deck->numval[more];
+        total+=Deck->numval[more];
+        cout<<endl;
         cout<<"Alright Adding this card to your hand..."<<endl;
-        cout<<"New Card:  Suit: "<<Deck[more].suit<< " Face Value: ";
-        cout<<Deck[more].faceval<<" Number Value: "<<Deck[more].numval;
+        cout<<"New Card:  Suit: "<<Deck->suit[more]<< " Face Value: ";
+        cout<<Deck->faceval[more]<<" Number Value: "<<Deck->numval[more];
         if(Deck->numval[more]==1)
         {
         cout<<"You have an Ace! Remember you can change it's to 1 or 11.";
         cout<<"choose wisely"<<endl;
         }
         cout<<endl;
+        
         cout<<"Are you done, or do you want to go for another hit?"<<endl;
+        cout<<"Press H for hit or S for stand."<<endl;
         cin>>choice;
-    }     
-    if(YOU.hand>21)
-    {
-        cout<<"Looks like you bust.Better luck next time"<<endl;
-        money-=YOU.bet;
-        cout<<"You now have $"<<money<<endl;
-        cout<<endl;
-        win=false;
-    }
+    }  
+    return total;
 }
 /********************************************************************************************************************************************************/
-void sortAI(ai* AI,int numAI)
+void sortAI(int *AI,int numAI)
 {
  int z, min;
     for (int i = 0; i <numAI; i++)
     {
        z = i;
-       min= AI->hand[i];
+       min= AI[i];
        for(int j = i + 1; j < numAI; j++)
        {
-          if (AI->hand[j] < min)
+          if (AI[j] < min)
           {
-             min = AI->hand[j];
+             min = AI[j];
              z= j;
           }
        }
-      AI->hand[z] = AI->hand[i];
-       AI->hand[i] = min;
+      AI[z] = AI[i];
+       AI[i] = min;
     }
-    for(int i=0;i<numAI;i++)
-    {
-        cout<<"AI cards:"<<endl;
-        cout<<AI->hand[i]<<endl;
-    }
+    
 }
 /********************************************************************************************************************************************************/
 int shuffleCards()
@@ -305,31 +344,7 @@ int shuffleCards()
         return index;
 }
 /********************************************************************************************************************************************************/
-int getAICrd(ai* AI,card* Deck)
-{
-    int total=0;
-            
-            for(int z=0; z<2;z++)
-            {
-                int index=shuffleCards();
-                total+=Deck->numval[index];
-                if(Deck->altnumval[index]>1)
-                {
-                    if(total <= 10)
-                    {
-                        total+=10;
-                    }
-                }
-            }   
-            if(total<17)
-            {
-                int index=shuffleCards();
-                total+=Deck->numval[index];
-            }
-    return total;   
-} 
-/********************************************************************************************************************************************************/
-int getDealCrd(dealer Dealer,card* Deck)
+int getDealCrd(card* Deck)
 {
     int total=0;
     for(int a=0;a<2;a++)
@@ -350,8 +365,7 @@ int getDealCrd(dealer Dealer,card* Deck)
 float placeBet(float money)
 {
     float bet;
-    cout<<"It's time to place your bet! How much money did you bring?"<<endl;
-    cin>>money;
+    cout<<"It's time to place your bet! You have $100 with you. Don't bet it all in one go."<<endl;
     cout<<"Place your bet (Minimum of $5, Maximum of $100)"<<endl;
     cin>>bet;//Place your bet
     while(bet>money)
@@ -361,62 +375,65 @@ float placeBet(float money)
     }
     while(isalpha(bet))
     {
-        cout<<"That's not even a number! Try again.?"<<endl;
-        cin.ignore();
+        cout<<"That's not even a number! Try again."<<endl;
         cin>>bet;
     }
-    while((bet < 5) || (bet > 100))//Input Validation 
+    while(bet < 5 || bet > 100)//Input Validation 
     { 
         cout<<"Sorry but you cannot place that bet as it is beyond the established bounds."<<endl;
         cout<<"Please place a bet of a lower or higher amount"<<endl;
         cin>>bet;
     }
+    cout<<"$"<<bet<<" ? Ok!"<<endl;
+    cout<<endl;
     return bet;
 }
 /********************************************************************************************************************************************************/
-bool blackjack(ai* AI, dealer Dealer, int numAI)
+bool blackjack(int *AI, int Dealer, int numAI)
 {
         cout<<"Blackjack! But hold on now, let's if anybody else has blackjack."<<endl;
         for(int i =0; i<numAI;i++)
         {
-            if(AI->hand[i]==21)
+            if(AI[i]==21)
             {
-                cout<<"Player"<<i+1<<"Also seems to have blackjack"<<endl;
-                if(Dealer.hand==21)
+                cout<<"Player"<<i+1<<"Also seems to have blackjack."<<endl;
+                if(Dealer==21)
                 {
-                    cout<<"And so does the dealer. Looks like it's a push. You keep your money"<<endl;
-                    return false;
+                    cout<<"And so does the dealer."<<endl;
+                    return true;
                 }
+                return true;
             }
         }
-        if(Dealer.hand==21)
+        if(Dealer==21)
         {
-            cout<<"And so does the dealer. Looks like it's a push. You keep your money"<<endl;
-            return false;
-        }   
+            cout<<"And so does the dealer."<<endl;
+            return true;
+        }
+        //If nobody else has blackjack
+        return false;
 }
 /********************************************************************************************************************************************************/
-bool compare(player YOU, ai* AI, dealer Dealer, int numAI)
+bool compare(player YOU, int* AI, int Dealer, int numAI)
 {
-    if(YOU.hand>AI->hand[numAI])
+    cout<<endl;
+    if(static_cast<int>(YOU.hand)>AI[numAI])
     {
         cout<<"You did better than the other players! But what about against the dealer?"<<endl;
-        if(YOU.hand<Dealer.hand)
+        if(static_cast<int>(YOU.hand)<Dealer)
         {
-            cout<<"The dealer has "<<Dealer.hand<<" points, which is more than you."<<endl;
-            cout<<"Seems like you lost."<<endl;
+            cout<<"The dealer has "<<Dealer<<" points, which is more than you."<<endl;
             return false;
         }
         else
         {
-            cout<<"The dealer has "<<Dealer.hand<<" points."<<endl;
-            cout<<"You won!"<<endl;
+            cout<<"The dealer has "<<Dealer<<" points. So it looks like you won!"<<endl;
             return true;
         }
     }
-    else//If you lost
+    else //if(YOU.hand<AI[numAI])//If you lost
     {
-        cout<<"Looks you didn't fair as well as other players. You lost"<<endl;
+        cout<<"Looks you didn't fair as well as other players."<<endl;
         return false;
     }
 }

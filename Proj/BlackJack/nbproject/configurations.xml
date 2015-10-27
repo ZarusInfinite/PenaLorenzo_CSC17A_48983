@@ -4,9 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>ai.h</itemPath>
       <itemPath>card.h</itemPath>
-      <itemPath>dealer.h</itemPath>
       <itemPath>player.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -43,11 +41,7 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
-      <item path="ai.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="card.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="dealer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -74,11 +68,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="ai.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="card.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="dealer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
