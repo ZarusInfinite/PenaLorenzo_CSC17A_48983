@@ -5,13 +5,6 @@
  * Created on October 18, 2015, 1:47 PM
  */
 
-/********THINGS TO FIX: placeBet not reading numbers properly
- * bool compare: not going through if statements properly
- * choice 'H' for nextStep breaks program
- * AI hands always 0
- * 
- *******/
-
 #include <cstdlib>
 #include <iostream>
 #include <ctime>
@@ -88,17 +81,7 @@ int main(int argc, char** argv) {
     //Next step: hit or stand?
     YOU.hand+=nextStep(YOU,Deck,money,win);
     
-    //If you have an ace
-    if(ace=true)
-    {
-        int add=0;
-        cout<<"You have an ace. Would you like to convert it to 11, or leave it as 1?"<<endl;
-        cout<<"Press 1 to keep it as 1 or 11 to turn it into 11"<<endl;
-        cin>>add;
-        add-1;
-        YOU.hand+add;
-    }
-
+   
     //BLACKJACK!!!
     if(YOU.hand==21)
     {
@@ -121,7 +104,7 @@ int main(int argc, char** argv) {
     else if(win==true)//If you win
     {
         cout<<"Congrats! You won!"<<endl;
-        money+=(YOU.bet/2);
+        money+=YOU.hand/2;
         cout<<"You now have $"<<money<<"."<<endl;
     }
     else//If push
@@ -132,7 +115,7 @@ int main(int argc, char** argv) {
         
            
         
- //COMPETITION'S CARDS  
+ //DISPLAY COMPETITION'S CARDS  
     cout<<"Your hand: "<<YOU.hand<<endl;
     cout<<"Dealer's hand: "<<Dealer<<endl;
         for(int i=0;i<numAI;i++)
@@ -285,7 +268,11 @@ int getCards(player YOU, card *Deck,bool ace)
         {
             cout<<"You have an Ace! Remember you can change it's to 1 or 11.";
             cout<<" Choose wisely."<<endl;
-            ace=true;
+            int add=0;
+            cout<<"You have an ace. Would you like to convert it to 11, or leave it as 1?"<<endl;
+            cout<<"Press 1 to keep it as 1 or 11 to turn it into 11"<<endl;
+            cin>>add;
+            total+add;
         }
         total+=Deck->numval[index];
     }
@@ -430,29 +417,26 @@ bool blackjack(int *AI, int Dealer, int numAI)
 bool compare(player YOU, int* AI, int Dealer, int numAI)
 {
     cout<<endl;
-    if(static_cast<int>(YOU.hand)>AI[numAI])
+    if(YOU.hand>=AI[numAI-1])
     {
         cout<<"You did better than the other players! But what about against the dealer?"<<endl;
-        if(static_cast<int>(YOU.hand)<Dealer)
+        if(YOU.hand<Dealer)
+        {
+            cout<<"The dealer has "<<Dealer<<" points."<<endl;
+            return false;
+        }
+        else if(YOU.hand==Dealer)
         {
             cout<<"The dealer has "<<Dealer<<" points."<<endl;
             return false;
         }
         else
         {
-            cout<<"The dealer has "<<Dealer<<" points."<<endl;
+            cout<<"The dealer has "<<Dealer<<" points."<<endl; 
             return true;
         }
     }
-    else if(static_cast<int>(YOU.hand)==AI[numAI])
-    {
-        if(YOU.hand<Dealer)
-        {
-            cout<<"Looks like you and another player won"<<endl;
-            return true;
-        }
-        
-    }
+    
     else //if(YOU.hand<AI[numAI])//If you lost
     {
         cout<<"Looks like you didn't fair as well as other players."<<endl;
