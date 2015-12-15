@@ -1,4 +1,4 @@
-#include <cstdlib>
+/*#include <cstdlib>
 #include <string>
 #include "PSU.h"
 
@@ -74,4 +74,4 @@ int PSU::getNumPeri()
 float PSU::getPrice()
 {
     return price;
-}
+}*/
