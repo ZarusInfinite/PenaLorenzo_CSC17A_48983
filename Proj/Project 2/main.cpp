@@ -12,11 +12,6 @@
 #include <string>
 
 using namespace std;
-
-/*
- * 
- */
-int main(int argc, char** argv) {
     
     /********************************************************************************************************************************/
     //Class Definitions
@@ -51,7 +46,7 @@ int main(int argc, char** argv) {
         void setBoost(int);
         void setVRAM(int);
         void setMClock(int);
-        void setMType(string);
+        //void setMType(string);
         void setMaxPow(int);
         void setRecPow(int);
         void setLength(int);
@@ -98,8 +93,8 @@ int main(int argc, char** argv) {
         void setModel(string);
         void setSock(string);
         void setName(string);
-        void setHype(bool);
-        void setIG(bool);
+        void setHype();//call if true
+        void setIG();//call if true
         void setCores(int);
         void setThreads(int);
         void setClock(int);
@@ -111,8 +106,8 @@ int main(int argc, char** argv) {
         string getModel();
         string getSocket();
         string getName();
-        bool getHype();
-        bool getIG();
+        //bool getHype();
+        //bool getIG();
         int getCores();
         int getThreads();
         int getClock();
@@ -191,6 +186,8 @@ int main(int argc, char** argv) {
         bool getVGA();
         bool getDVI();
         float getPrice();
+        
+    };
 /********************************************************************************************************************************/
        //Memory class
        class Memory
@@ -341,20 +338,310 @@ int main(int argc, char** argv) {
             float getPrice();
         
         };
+
 /********************************************************************************************************************************/
-        
-        
-        
-           
-        
-        
-        
-        
-        
-        
-        
-        
-    };
-    return 0;
+//Class Implementation 
+/********************************************************************************************************************************/
+
+/********************************************************************************************************************************/        
+// GPU class 
+GPU::GPU()
+{
+    brand="";
+    series="";
+    model="";
+    chip =' ';
+    coreClock=0;
+    boost=0;
+    VRAM=0;
+    memClock=0;
+    memType="GDDR5";
+    maxPow=0;
+    recPow=0;
+    length=0;
+    height=0;
+    price=0; 
 }
 
+void GPU::setBrand(string b)
+{
+    brand=b;
+}
+
+void GPU::setSeries(string s)
+{
+    series=s;
+}
+
+void GPU::setModel(string m)
+{
+    model=m;
+}
+
+void GPU::setChip(char c)
+{
+    chip=c;
+}
+
+void GPU::setCClock(int clk)
+{
+    coreClock=clk;
+}
+
+void GPU::setBoost(int bst)
+{
+    boost=bst;
+}
+    
+void GPU::setVRAM(int v)
+{
+    VRAM=v;
+}
+
+void GPU::setMClock(int mc)
+{
+    memClock=mc;
+}
+
+void GPU::setMaxPow(int mxp)
+{
+    maxPow=mxp;
+}
+
+void GPU::setRecPow(int rcp)
+{
+    recPow=rcp;
+}
+
+void GPU::setLength(int l)
+{
+    length=l;
+}
+
+void GPU::setHeight(int h)
+{
+    height=h;
+}
+
+void GPU::setPrice(float)
+{
+    price=0;
+}
+
+string GPU::getBrand()
+{
+    return brand;
+}
+
+string GPU::getSeries()
+{
+    return series;
+}
+
+string GPU::getModel()
+{
+    return model;
+}
+
+char GPU::getChip()
+{
+    return chip;
+}
+
+int GPU::getCClock()
+{
+    return coreClock;
+}
+
+int GPU::getBoost()
+{
+    return boost;
+}
+
+int GPU::getVRAM()
+{
+    return VRAM;
+}
+
+int GPU::getMClock()
+{
+    return memClock;
+}
+
+int GPU::getMaxPow()
+{
+    return maxPow;
+}
+
+int GPU::getRecPow()
+{
+    return recPow;
+}
+
+int GPU::getLength()
+{
+    return length;
+}
+
+int GPU::getHeight()
+{
+    return height;
+}
+
+float GPU::getPrice()
+{
+    return price;
+}
+
+/********************************************************************************************************************************/        
+
+//CPU class
+
+CPU::CPU()
+{
+    brand="";
+    series="";
+    model="";
+    socket="";
+    coreName="";
+    hyperThread=false;
+    intGraphics=false;
+    numCores=0;
+    numThreads=0;
+    clock=0;
+    TDP=0;
+    price=0;
+}
+
+void CPU::setBrand(string b)
+{
+    brand=b;
+}
+
+void CPU::setSeries(string s)
+{
+    series=s;
+}
+
+void CPU::setModel(string m)
+{
+    model=m;
+}
+
+void CPU::setSock(string sck)
+{
+    socket=sck;
+}
+
+void CPU::setName(string n)
+{
+    coreName=n;
+}
+
+void CPU::setHype()
+{
+    hyperThread=true;
+}
+
+void CPU::setIG()
+{
+    intGraphics=true;
+}
+
+void CPU::setCores(int cr)
+{
+    numCores=cr;
+}
+
+void CPU::setThreads(int tr)
+{
+    numThreads=tr;
+}
+
+void CPU::setClock(int clk)
+{
+    clock=clk;
+}
+
+void CPU::setTDP(int tdp)
+{
+    TDP=tdp;
+}
+
+void CPU::setPrice(float p)
+{
+    price=p;
+}
+
+//Accessors
+
+string CPU::getBrand()
+{
+    return brand;
+}
+
+string CPU::getSeries()
+{
+    return series;
+}
+
+string CPU::getModel()
+{
+    return model;
+}
+
+string CPU::getSocket()
+{
+    return socket;
+}
+
+string CPU::getName()
+{
+    return coreName;
+}
+
+int CPU::getCores()
+{
+    return numCores;
+}
+
+int CPU::getThreads()
+{
+    return numThreads;
+}
+
+int CPU::getClock()
+{
+    return clock;
+}
+
+int CPU::getTDP()
+{
+    return TDP;
+}
+
+float CPU::getPrice()
+{
+    return price;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int main(int argc, char** argv) 
+
+{
+    
+   return 0; 
+}
+      
