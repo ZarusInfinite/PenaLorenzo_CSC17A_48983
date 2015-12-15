@@ -160,9 +160,9 @@ using namespace std;
         void setFormFac(int);
         void setLength(int);
         void setHeight(int);
-        void setHDMI(bool);
-        void setVGA(bool);
-        void setDVI(bool);
+        void setHDMI();
+        void setVGA();
+        void setDVI();
         void setPrice(float);
         //Accessors
         string getBrand();
@@ -624,6 +624,304 @@ float CPU::getPrice()
 {
     return price;
 }
+
+/********************************************************************************************************************************/        
+
+//Mobo class
+
+Mobo::Mobo()
+{
+    brand="";
+    series="";
+    model="";
+    socket="";
+    cpuType="";
+    chipset="";
+    //memType="";
+    numMem=0;
+    maxMem=0;
+    numPCI=0;
+    numSata=0;
+    numSataEXP=0;
+    numM2=0;
+    numUSB=0;
+    formFact=0;
+    length=0;
+    height=0;
+    HDMI=false;
+    VGA=false;
+    DVI=false;
+    price=0; 
+}
+//Mutators
+void Mobo::setBrand(string b)
+{
+    brand=b;
+}
+
+void Mobo::setSeries(string s)
+{
+    series=s;
+}
+
+void Mobo::setModel(string m)
+{
+    model=m;
+}
+
+void Mobo::setSock(string sck)
+{
+    socket=sck;
+}
+
+void Mobo::setCpuType(string ct)
+{
+    cpuType=ct;
+}
+
+void Mobo::setChip(string c)
+{
+    chipset=c;
+}
+
+void Mobo::setMem(string mem)
+{
+    memType=mem;
+}
+
+void Mobo::setNumMem(int nm)
+{
+    numMem=nm;
+}
+
+void Mobo::setMaxMem(int mm)
+{
+    maxMem=mm;
+}
+
+void Mobo::setNumPCI(int np)
+{
+    numPCI=np;
+}
+
+void Mobo::setNumSata(int ns)
+{
+    numSata=ns;
+}
+
+void Mobo::setNumSataEXP(int nsx)
+{
+    numSataEXP=nsx;
+}
+
+void Mobo::setNumM2(int nm2)
+{
+    numM2=nm2;
+}
+
+void Mobo::setNumUSB(int u)
+{
+    numUSB=u;
+}
+
+void Mobo::setFormFac(int f)
+{
+    formFact=f;
+}
+
+void Mobo::setLength(int l)
+{
+    length=l;
+}
+
+void Mobo::setHeight(int h)
+{
+    height=h;
+}
+
+void Mobo::setHDMI()
+{
+    HDMI=true;
+}
+
+void Mobo::setVGA()
+{
+    VGA=true;
+}
+
+void Mobo::setDVI()
+{
+    DVI=true;
+}
+
+void Mobo::setPrice(float p)
+{
+    price=p;
+}
+//Accessors
+string Mobo::getBrand()
+{
+    return brand;
+}
+
+string Mobo::getSeries()
+{
+    return series;
+}
+
+string Mobo::getModel()
+{
+    return model;
+}
+
+string Mobo::getSocket()
+{
+    return socket;
+}
+
+string Mobo::getCpuType()
+{
+    return cpuType;
+}
+
+string Mobo::getChip()
+{
+    return chipset;
+}
+
+string Mobo::getMem()
+{
+    return memType;
+}
+
+int Mobo::getNumMem()
+{
+    return numMem;
+}
+
+int Mobo::getMaxMem()
+{
+    return maxMem;
+}
+
+int Mobo::getNumPCI()
+{
+    return numPCI;
+}
+
+int Mobo::getNumSata()
+{
+    return numSata;
+}
+
+int Mobo::getNumSataEXP()
+{
+    return numSataEXP;
+}
+
+int Mobo::getNumM2()
+{
+    return numM2;
+}
+
+int Mobo::getNumUSB()
+{
+    return numUSB;
+}
+
+int Mobo::getFormFac()
+{
+    return formFact;
+}
+
+int Mobo::getLength()
+{
+    return length;
+}
+
+int Mobo::getHeight()
+{
+    return height;
+}
+
+float Mobo::getPrice()
+{
+    return price;
+}
+
+/********************************************************************************************************************************/        
+
+//Memory class
+
+Memory::Memory()
+{
+    brand="";
+    model="";
+    type="";
+    speed=0;
+    capacity=0;
+    price=0;
+}
+
+void Memory::setBrand(string b)
+{
+    brand=b;
+}
+
+void Memory::setModel(string m)
+{
+    model=m;
+}
+
+void Memory::setSpeed(int s)
+{
+    speed=s;
+}
+
+void Memory::setCap(int c)
+{
+    capacity=c;
+}
+
+void Memory::setPrice(float p)
+{
+    price=p;
+}
+
+string Memory::getBrand()
+{
+    return brand;
+}
+
+string Memory::getModel()
+{
+    return model;
+}
+
+string Memory::getType()
+{
+    return type;
+}
+
+string Memory::getSpeed()
+{
+    return speed;
+}
+
+string Memory::getCap()
+{
+    return capacity;
+}
+
+float Memory::getPrice()
+{
+    return price;
+}
+
+/********************************************************************************************************************************/        
+//Storage class
+
+
 
 
 
