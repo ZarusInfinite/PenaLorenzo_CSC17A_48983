@@ -24,7 +24,7 @@ using namespace std;
         bool intGraphics;//Integrated graphics yes or no
         int numCores;
         int numThreads;
-        int clock;
+        float clock;
         int TDP;
         float price;
     public:
@@ -39,7 +39,7 @@ using namespace std;
         void setIG();//call if true
         void setCores(int);
         void setThreads(int);
-        void setClock(int);
+        void setClock(float);
         void setTDP(int);
         void setPrice(float);
         //Accessors
@@ -50,7 +50,7 @@ using namespace std;
         string getName();
         int getCores();
         int getThreads();
-        int getClock();
+        float getClock();
         int getTDP();
         float getPrice();
     };

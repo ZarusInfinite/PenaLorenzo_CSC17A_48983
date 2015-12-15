@@ -18,8 +18,8 @@ using namespace std;
     private:
             string brand;
             string series;
-            string model;
-            char chip;//Chip manufacturer, i.e. Nvidia or AMD
+            string manu;
+            int chip;//Chip manufacturer, i.e. Nvidia or AMD
             int coreClock;//gpu clockspeed
             int boost;//after market overclock
             int VRAM;
@@ -35,8 +35,8 @@ using namespace std;
         //Mutators
         void setBrand(string);
         void setSeries(string);
-        void setModel(string);
-        void setChip(char);
+        void setManu(string);
+        void setChip(int);
         void setCClock(int);
         void setBoost(int);
         void setVRAM(int);
@@ -44,14 +44,14 @@ using namespace std;
         //void setMType(string);
         void setMaxPow(int);
         void setRecPow(int);
-        void setLength(int);
-        void setHeight(int);
+        void setLength(float);
+        void setHeight(float);
         void setPrice(float);
         //Accessors
         string getBrand();
         string getSeries();
-        string getModel();
-        char getChip();
+        string getManu();
+        int getChip();
         int getCClock();
         int getBoost();
         int getVRAM();
@@ -59,8 +59,8 @@ using namespace std;
         string getMType();
         int getMaxPow();
         int getRecPow();
-        int getLength();
-        int getHeight();
+        float getLength();
+        float getHeight();
         float getPrice();     
     };
 

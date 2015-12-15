@@ -67,7 +67,7 @@ void CPU::setThreads(int tr)
     numThreads=tr;
 }
 
-void CPU::setClock(int clk)
+void CPU::setClock(float clk)
 {
     clock=clk;
 }
@@ -119,7 +119,7 @@ int CPU::getThreads()
     return numThreads;
 }
 
-int CPU::getClock()
+float CPU::getClock()
 {
     return clock;
 }

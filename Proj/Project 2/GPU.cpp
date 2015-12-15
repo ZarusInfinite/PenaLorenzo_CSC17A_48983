@@ -10,7 +10,7 @@ GPU::GPU()
 {
     brand="";
     series="";
-    model="";
+    manu="";
     chip =' ';
     coreClock=0;
     boost=0;
@@ -34,12 +34,12 @@ void GPU::setSeries(string s)
     series=s;
 }
 
-void GPU::setModel(string m)
+void GPU::setManu(string m)
 {
     model=m;
 }
 
-void GPU::setChip(char c)
+void GPU::setChip(int c)
 {
     chip=c;
 }
@@ -74,12 +74,12 @@ void GPU::setRecPow(int rcp)
     recPow=rcp;
 }
 
-void GPU::setLength(int l)
+void GPU::setLength(float l)
 {
     length=l;
 }
 
-void GPU::setHeight(int h)
+void GPU::setHeight(float h)
 {
     height=h;
 }
@@ -99,12 +99,12 @@ string GPU::getSeries()
     return series;
 }
 
-string GPU::getModel()
+string GPU::getManu()
 {
-    return model;
+    return manu;
 }
 
-char GPU::getChip()
+int GPU::getChip()
 {
     return chip;
 }
@@ -139,12 +139,12 @@ int GPU::getRecPow()
     return recPow;
 }
 
-int GPU::getLength()
+float GPU::getLength()
 {
     return length;
 }
 
-int GPU::getHeight()
+float GPU::getHeight()
 {
     return height;
 }
