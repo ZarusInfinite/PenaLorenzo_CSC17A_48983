@@ -4,6 +4,13 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>CPU.h</itemPath>
+      <itemPath>Case.h</itemPath>
+      <itemPath>GPU.h</itemPath>
+      <itemPath>Memory.h</itemPath>
+      <itemPath>Mobo.h</itemPath>
+      <itemPath>PSU.h</itemPath>
+      <itemPath>Storage.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -12,6 +19,13 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>CPU.cpp</itemPath>
+      <itemPath>Case.cpp</itemPath>
+      <itemPath>GPU.cpp</itemPath>
+      <itemPath>Memory.cpp</itemPath>
+      <itemPath>Mobo.cpp</itemPath>
+      <itemPath>PSU.cpp</itemPath>
+      <itemPath>Storage.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -39,6 +53,34 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
+      <item path="CPU.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CPU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Case.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Case.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GPU.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GPU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Memory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Memory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mobo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Mobo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PSU.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PSU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Storage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Storage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
@@ -62,6 +104,34 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="CPU.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="CPU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Case.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Case.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GPU.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GPU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Memory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Memory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mobo.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Mobo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PSU.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PSU.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Storage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Storage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
