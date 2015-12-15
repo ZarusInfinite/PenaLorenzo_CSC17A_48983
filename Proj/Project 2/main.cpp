@@ -281,9 +281,9 @@ using namespace std;
         class Case
         {
         private:
-            string Brand;
-            string Series;
-            string Model;
+            string brand;
+            string series;
+            string model;
             int moboType;
             bool wPSU;
             bool frntPorts;
@@ -921,18 +921,339 @@ float Memory::getPrice()
 /********************************************************************************************************************************/        
 //Storage class
 
+Storage::Storage()
+{
+    brand="";
+    series="";
+    model="";
+    SSD=false;
+    capacity=0;
+    RPM=0;
+    price=0;
+}
 
+void Storage::setBrand(string b)
+{
+    brand=b;
+}
 
+void Storage::setSeries(string s)
+{
+    series=s;
+}
 
+void Storage::setModel(string m)
+{
+    model=m;
+}
 
+void Storage::setSSD()
+{
+    SSD=true;
+}
 
+void Storage::setCapacity(int cap)
+{
+    capacity=cap;
+}
 
+void Storage::setRPM(int r)
+{
+    RPM=r;
+}
 
+void Storage::setPrice(float p)
+{
+    price=p;
+}
 
+string Storage::getBrand()
+{
+    return brand;
+}
 
+string Storage::getSeries()
+{
+    return series;
+}
 
+string Storage::getModel()
+{
+    return model;
+}
 
+int Storage::getCap()
+{
+    return capacity;
+}
 
+int Storage::getRPM()
+{
+    return RPM;
+}
+
+float Storage::getPrice()
+{
+    return price;
+}
+
+/********************************************************************************************************************************/        
+//PSU class
+
+PSU::PSU()
+{
+    brand="";
+    model="";
+    maxPow=0;
+    num8pin=0;
+    numPeri=0;
+    price=0;
+}
+//Mutators
+void PSU::setBrand(string b)
+{
+    brand=b;
+}
+
+void PSU::setModel(string m)
+{
+    model=m;
+}
+
+void PSU::setMaxPow(int mp)
+{
+    maxPow=mp;
+}
+
+void PSU::setNum8(int pin)
+{
+    num8pin=pin;
+}
+
+void PSU::setNumPeri(int per)
+{
+    numPeri=per;
+}
+
+void PSU::setPrice(float p)
+{
+    price=p;
+}
+//Accessors
+
+string PSU::getBrand()
+{
+    return brand;
+}
+
+string PSU::getModel()
+{
+    return model;
+}
+
+int PSU::getMaxPow()
+{
+    return maxPow;
+}
+
+int PSU::getNum8()
+{
+    return num8pin;
+}
+
+int PSU::getNumPeri()
+{
+    return numPeri;
+}
+
+float PSU::getPrice()
+{
+    return price;
+}
+
+/********************************************************************************************************************************/        
+//Case class
+
+Case::Case()
+{
+    brand="";
+    series="";
+    model="";
+    moboType=0;
+    wPSU=false;
+    frntPorts=false;
+    numEXP=0;
+    numFans=0;
+    fanSize=0;
+    height=0;
+    width=0;
+    length=0;
+    maxGPU=0;
+    maxCooler=0;
+    maxPSU=0;
+    radCom=0;
+    price=0;
+}
+
+void Case::setBrand(string b)
+{
+    brand=b;
+}
+
+void Case::setSeries(string s)
+{
+    series=s;
+}
+
+void Case::setModel(string m)
+{
+    model=m;
+}
+
+void Case::setMobo(int m)
+{
+    moboType=m;
+}
+
+void Case::setWPSU()
+{
+    wPSU=true;
+}
+
+void Case::setPort()
+{
+    frntPorts=true;
+}
+
+void Case::setNumEXP(int nxp)
+{
+    numEXP=nxp;
+}
+
+void Case::setNumFans(int nf)
+{
+    numFans=nf;
+}
+
+void Case::setFSize(int fs)
+{
+    fanSize=fs;
+}
+
+void Case::setHeight(int h)
+{
+    height=h;
+}
+
+void Case::setWidth(int w)
+{
+    width=w;
+}
+
+void Case::setLength(int l)
+{
+    length=l;
+}
+
+void Case::setMaxCooler(float mc)
+{
+    maxCooler=0;
+}
+
+void Case::setMaxPSU(int mp)
+{
+    maxPSU=mp;
+}
+
+void Case::setRadCom(float rd)
+{
+    radCom=rd;
+}
+
+void Case::setPrice(float p)
+{
+    price=p;
+}
+//Accessors
+
+string Case::getBrand()
+{
+    return brand;
+}
+
+string Case::getSeries()
+{
+    return series;
+}
+
+string Case::getModel()
+{
+    return model;
+}
+
+int Case::getMobo()
+{
+    return moboType;
+}
+
+int Case::getNumEXP()
+{
+    return numEXP;
+}
+
+int Case::getNumFans()
+{
+    return numFans;
+}
+
+int Case::getFSize()
+{
+    return fanSize;
+}
+
+int Case::getHeight()
+{
+    return height;
+}
+
+int Case::getWidth()
+{
+    return width;
+}
+
+int Case::getLength()
+{
+    return length;
+}
+
+float Case::getMaxGPU()
+{
+    return maxGPU;
+}
+
+float Case::getMaxCooler()
+{
+    return maxCooler;
+}
+
+float Case::getMaxPSU()
+{
+    return maxPSU;
+}
+
+float Case::getRadCom()
+{
+    return radCom;
+}
+
+float Case::getPrice()
+{
+    return price;
+}
+
+/********************************************************************************************************************************/        
+//Main
+/********************************************************************************************************************************/        
 
 
 
