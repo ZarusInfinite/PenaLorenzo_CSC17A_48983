@@ -19,7 +19,7 @@ using namespace std;
             string brand;
             string series;
             string manu;
-            int chip;//Chip manufacturer, i.e. Nvidia or AMD
+            string chip;//Chip manufacturer, i.e. Nvidia or AMD
             int coreClock;//gpu clockspeed
             int boost;//after market overclock
             int VRAM;
@@ -36,7 +36,7 @@ using namespace std;
         void setBrand(string);
         void setSeries(string);
         void setManu(string);
-        void setChip(int);
+        void setChip(string);
         void setCClock(int);
         void setBoost(int);
         void setVRAM(int);
@@ -51,7 +51,7 @@ using namespace std;
         string getBrand();
         string getSeries();
         string getManu();
-        int getChip();
+        string getChip();
         int getCClock();
         int getBoost();
         int getVRAM();

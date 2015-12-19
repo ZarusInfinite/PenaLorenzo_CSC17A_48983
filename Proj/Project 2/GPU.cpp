@@ -11,7 +11,7 @@ GPU::GPU()
     brand="";
     series="";
     manu="";
-    chip =' ';
+    chip ="";
     coreClock=0;
     boost=0;
     VRAM=0;
@@ -36,10 +36,10 @@ void GPU::setSeries(string s)
 
 void GPU::setManu(string m)
 {
-    model=m;
+    manu=m;
 }
 
-void GPU::setChip(int c)
+void GPU::setChip(string c)
 {
     chip=c;
 }
@@ -104,7 +104,7 @@ string GPU::getManu()
     return manu;
 }
 
-int GPU::getChip()
+string GPU::getChip()
 {
     return chip;
 }

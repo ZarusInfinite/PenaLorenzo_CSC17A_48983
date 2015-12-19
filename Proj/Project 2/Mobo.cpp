@@ -21,7 +21,7 @@ Mobo::Mobo()
     numSata=0;
     formFact=0;
     length=0;
-    height=0;
+    width=0;
     HDMI=false;
     VGA=false;
     DVI=false;
@@ -88,14 +88,14 @@ void Mobo::setFormFac(int f)
     formFact=f;
 }
 
-void Mobo::setLength(int l)
+void Mobo::setLength(float l)
 {
     length=l;
 }
 
-void Mobo::setHeight(int h)
+void Mobo::setWidth(float w)
 {
-    height=h;
+    width=w;
 }
 
 void Mobo::setHDMI()
@@ -178,14 +178,14 @@ int Mobo::getFormFac()
     return formFact;
 }
 
-int Mobo::getLength()
+float Mobo::getLength()
 {
     return length;
 }
 
-int Mobo::getHeight()
+float Mobo::getWidth()
 {
-    return height;
+    return width;
 }
 
 float Mobo::getPrice()
